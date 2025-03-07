@@ -5,7 +5,7 @@ import { Feedback } from '../../shared/models/feedback';
 
 @Injectable({ providedIn: 'root' })
 export class FeedbackService {
-    private apiUrl = 'https://feedbackapi-demo.azurewebsites.net/api/feedback';
+    private apiUrl = 'https://feedbackplan-baeegndnfdbpc4hz.canadacentral-01.azurewebsites.net/api/feedback';
 
     constructor(private http: HttpClient) { }
 
