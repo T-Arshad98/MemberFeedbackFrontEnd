@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { FeedbackService } from './services/feedback.service';
-import { Feedback } from './shared/models/feedback';
+import { FeedbackService } from './services/feedback/feedback.service';
 import { CommonModule } from '@angular/common';
+import { Feedback } from './shared/models/feedback';
+
 @Component({
     selector: 'app-root',
     standalone: true,
