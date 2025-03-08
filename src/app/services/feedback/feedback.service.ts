@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Feedback } from '../../shared/models/feedback';
 
@@ -22,7 +22,11 @@ export class FeedbackService {
     }
 
     login(password: string): Observable<any> {
-        return this.http.post(`${this.apiUrl}/admin/login`, password, { withCredentials: true });
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.post(`${this.apiUrl}/admin/login`, JSON.stringify(password), { 
+            headers, 
+            withCredentials: true 
+        });
     }
 
     getAllFeedback(): Observable<Feedback[]> {

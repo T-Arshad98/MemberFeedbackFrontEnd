@@ -42,14 +42,17 @@ export class AppComponent implements OnInit {
             this.getStats();
         });
     }
-
+    
     login() {
-        this.feedbackService.login(this.adminPassword).subscribe(() => {
-            this.isAdmin = true;
-            this.getAllFeedback();
+        this.feedbackService.login(this.adminPassword).subscribe({
+            next: () => {
+                this.isAdmin = true;
+                this.getAllFeedback();
+            },
+            error: (err) => console.error('Login failed:', err)
         });
     }
-
+    
     getAllFeedback() {
         this.feedbackService.getAllFeedback().subscribe(data => this.feedbacks = data);
     }
