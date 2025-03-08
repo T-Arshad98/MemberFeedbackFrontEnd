@@ -28,18 +28,30 @@ export class AppComponent implements OnInit {
     }
 
     getFeedback() {
-        this.feedbackService.getApprovedFeedback().subscribe(data => this.feedbacks = data);
+        this.feedbackService.getApprovedFeedback().subscribe({
+            next: (data) => {
+                this.feedbacks = data;
+                console.log('Fetched feedbacks:', data); // Debug
+            },
+            error: (err) => console.error('Error fetching feedbacks:', err)
+        });
     }
-
+    
     getStats() {
-        this.feedbackService.getStats().subscribe(data => this.stats = data);
+        this.feedbackService.getStats().subscribe({
+            next: (data) => this.stats = data,
+            error: (err) => console.error('Error fetching stats:', err)
+        });
     }
 
     submitFeedback() {
-        this.feedbackService.submitFeedback(this.newFeedback).subscribe(() => {
-            this.newFeedback = { title: '', message: '', rating: 1 };
-            this.getFeedback();
-            this.getStats();
+        this.feedbackService.submitFeedback(this.newFeedback).subscribe({
+            next: () => {
+                this.newFeedback = { title: '', message: '', rating: 1 };
+                this.getFeedback(); // Refresh after submit
+                this.getStats();
+            },
+            error: (err) => console.error('Error submitting feedback:', err)
         });
     }
     
@@ -52,16 +64,28 @@ export class AppComponent implements OnInit {
             error: (err) => console.error('Login failed:', err)
         });
     }
-    
+
     getAllFeedback() {
-        this.feedbackService.getAllFeedback().subscribe(data => this.feedbacks = data);
+        this.feedbackService.getAllFeedback().subscribe({
+            next: (data) => {
+                this.feedbacks = data;
+                console.log('Fetched all feedbacks:', data); // Debug
+            },
+            error: (err) => console.error('Error fetching all feedbacks:', err)
+        });
     }
 
     approve(id: number) {
-        this.feedbackService.approveFeedback(id).subscribe(() => this.getAllFeedback());
+        this.feedbackService.approveFeedback(id).subscribe({
+            next: () => this.getAllFeedback(), // Refresh after approve
+            error: (err) => console.error('Error approving feedback:', err)
+        });
     }
 
     reject(id: number) {
-        this.feedbackService.rejectFeedback(id).subscribe(() => this.getAllFeedback());
+        this.feedbackService.rejectFeedback(id).subscribe({
+            next: () => this.getAllFeedback(), // Refresh after reject
+            error: (err) => console.error('Error rejecting feedback:', err)
+        });
     }
 }
